@@ -1,39 +1,23 @@
 <template>
   <div class="calculator">
     <div class="display">{{current || '0'}}</div>
-    <div @click="clear" class="btn operator">C</div>
-    <div @click="divide" class="btn operator">rad</div>
-    <div @click="divide" class="btn operator">root</div>
-    <div @click="append('(')" class="btn operator">(</div>
-    <div @click="append(')')" class="btn operator">)</div>
-    <div @click="percent" class="btn operator">%</div>
+    <div @click="clear" class="btn">C</div>
+    <div @click="sign" class="btn">+/-</div>
+    <div @click="percent" class="btn">%</div>
     <div @click="divide" class="btn operator">÷</div>
-    <div @click="divide" class="btn operator">sin</div>
-    <div @click="divide" class="btn operator">cos</div>
-    <div @click="divide" class="btn operator">tan</div>
     <div @click="append('7')" class="btn">7</div>
     <div @click="append('8')" class="btn">8</div>
     <div @click="append('9')" class="btn">9</div>
     <div @click="times" class="btn operator">x</div>
-    <div @click="divide" class="btn operator">ln</div>
-    <div @click="divide" class="btn operator">log</div>
-    <div @click="divide" class="btn operator">1/x</div>
     <div @click="append('4')" class="btn">4</div>
     <div @click="append('5')" class="btn">5</div>
     <div @click="append('6')" class="btn">6</div>
     <div @click="minus" class="btn operator">-</div>
-    <div @click="divide" class="btn operator">e^x</div>
-    <div @click="divide" class="btn operator">x^2</div>
-    <div @click="divide" class="btn operator">x^y</div>
     <div @click="append('1')" class="btn">1</div>
     <div @click="append('2')" class="btn">2</div>
     <div @click="append('3')" class="btn">3</div>
     <div @click="add" class="btn operator">+</div>
-    <div @click="divide" class="btn operator">|x|</div>
-    <div @click="divide" class="btn operator">PI</div>
-    <div @click="divide" class="btn operator">e</div>
-    <div @click="sign" class="btn">+/-</div>
-    <div @click="append('0')" class="btn">0</div>
+    <div @click="append('0')" class="btn zero">0</div>
     <div @click="dot" class="btn">.</div>
     <div @click="equal" class="btn operator">=</div>
   </div>
@@ -107,12 +91,16 @@ export default {
 .calculator {
   font-size: 40px;
   display: grid;
-  grid-auto-rows: minmax(40px, auto);
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(80px, auto);
 }
 .display {
-  grid-column: 1 / 8;
+  grid-column: 1 / 5;
   background-color: #333;
   color: white;
+}
+.zero {
+  grid-column: 1 / 3;
 }
 .btn {
   background-color: #F2F2F2;
