@@ -30,7 +30,7 @@
     <div @click="append('3')" class="btn">3</div>
     <div @click="add" class="btn operator">+</div>
     <div @click="divide" class="btn operator">|x|</div>
-    <div @click="pi" class="btn operator">PI</div>
+    <div @click="divide" class="btn operator">PI</div>
     <div @click="divide" class="btn operator">e</div>
     <div @click="sign" class="btn">+/-</div>
     <div @click="append('0')" class="btn">0</div>
@@ -98,7 +98,7 @@ export default {
         parseFloat(this.previous)
       )}`;
       this.previous = null;
-    },
+    }
   }
 }
 </script>
