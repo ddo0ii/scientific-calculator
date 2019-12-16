@@ -1,11 +1,11 @@
 <template>
   <div class="calculator">
     <div class="display">{{current || '0'}}</div>
-    <div @click="divide" class="btn operator">~</div>
+    <div @click="clear" class="btn operator">C</div>
     <div @click="divide" class="btn operator">rad</div>
     <div @click="divide" class="btn operator">root</div>
-    <div @click="clear" class="btn operator">C</div>
-    <div @click="sign" class="btn operator">()</div>
+    <div @click="append('(')" class="btn operator">(</div>
+    <div @click="append(')')" class="btn operator">)</div>
     <div @click="percent" class="btn operator">%</div>
     <div @click="divide" class="btn operator">÷</div>
     <div @click="divide" class="btn operator">sin</div>
@@ -30,7 +30,7 @@
     <div @click="append('3')" class="btn">3</div>
     <div @click="add" class="btn operator">+</div>
     <div @click="divide" class="btn operator">|x|</div>
-    <div @click="divide" class="btn operator">pie</div>
+    <div @click="pi" class="btn operator">PI</div>
     <div @click="divide" class="btn operator">e</div>
     <div @click="sign" class="btn">+/-</div>
     <div @click="append('0')" class="btn">0</div>
@@ -98,7 +98,7 @@ export default {
         parseFloat(this.previous)
       )}`;
       this.previous = null;
-    }
+    },
   }
 }
 </script>
@@ -107,7 +107,6 @@ export default {
 .calculator {
   font-size: 40px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(40px, auto);
 }
 .display {
