@@ -3,34 +3,34 @@
     <div class="display">{{current || '0'}}</div>
     <div @click="clear" class="btn operator">C</div>
     <div @click="rad" class="btn operator">rad</div>
-    <div @click="root" class="btn operator">root</div>
+    <div @click="append('Math.sqrt(')" class="btn operator">root</div>
     <div @click="append('(')" class="btn operator">(</div>
     <div @click="append(')')" class="btn operator">)</div>
     <div @click="percent" class="btn operator">%</div>
-    <div @click="divide" class="btn operator">÷</div>
-    <div @click="sin" class="btn operator">sin</div>
-    <div @click="cos" class="btn operator">cos</div>
-    <div @click="tan" class="btn operator">tan</div>
+    <div @click="append('/')" class="btn operator">÷</div>
+    <div @click="append('Math.sin(')" class="btn operator">sin</div>
+    <div @click="append('Math.cos(')" class="btn operator">cos</div>
+    <div @click="append('Math.tan(')" class="btn operator">tan</div>
     <div @click="append('7')" class="btn">7</div>
     <div @click="append('8')" class="btn">8</div>
     <div @click="append('9')" class="btn">9</div>
-    <div @click="times" class="btn operator">x</div>
-    <div @click="ln" class="btn operator">ln</div>
-    <div @click="log" class="btn operator">log</div>
+    <div @click="append('*')" class="btn operator">x</div>
+    <div @click="append('Math.log(')" class="btn operator">ln</div>
+    <div @click="append('Math.log10(')" class="btn operator">log</div>
     <div @click="xdivide" class="btn operator">1/x</div>
     <div @click="append('4')" class="btn">4</div>
     <div @click="append('5')" class="btn">5</div>
     <div @click="append('6')" class="btn">6</div>
-    <div @click="minus" class="btn operator">-</div>
-    <div @click="expow" class="btn operator">e^x</div>
+    <div @click="append('-')" class="btn operator">-</div>
+    <div @click="append('Math.exp(')" class="btn operator">e^x</div>
     <div @click="xtpow" class="btn operator">x^2</div>
     <div @click="xypow" class="btn operator">x^y</div>
     <div @click="append('1')" class="btn">1</div>
     <div @click="append('2')" class="btn">2</div>
     <div @click="append('3')" class="btn">3</div>
-    <div @click="add" class="btn operator">+</div>
+    <div @click="append('+')" class="btn operator">+</div>
     <div @click="abs" class="btn operator">|x|</div>
-    <div @click="pi" class="btn operator">PI</div>
+    <div @click="piyo" class="btn operator">PI</div>
     <div @click="juste" class="btn operator">e</div>
     <div @click="sign" class="btn">+/-</div>
     <div @click="append('0')" class="btn">0</div>
@@ -45,6 +45,7 @@ export default {
     return {
       previous: null,
       current: '',
+      scurrent: '',
       operator: null,
       operatorClicked: false,
     }
@@ -52,10 +53,14 @@ export default {
   methods: {
     clear() {
       this.current = '';
+      this.scurrent ='';
     },
     sign() {
       this.current = this.current.charAt(0) === '-' ? 
         this.current.slice(1) : `-${this.current}`;
+        
+      this.scurrent = this.scurrent.charAt(0) === '-' ? 
+        this.scurrent.slice(1) : `-${this.scurrent}`;
     },
     append(number) {
       if (this.operatorClicked) {
@@ -63,6 +68,12 @@ export default {
         this.operatorClicked = false;
       }
       this.current = `${this.current}${number}`;
+      
+      if (this.operatorClicked) {
+        this.scurrent = '';
+        this.operatorClicked = false;
+      }
+      this.scurrent = `${this.scurrent}${number}`;
     },
     dot() {
       if (this.current.indexOf('.') === -1) {
@@ -71,87 +82,39 @@ export default {
     },
     setPrevious() {
       this.previous = this.current;
-      this.operatorClicked = true;
     },
     percent() {
       this.current = `${parseFloat(this.current) / 100}`;
-    },    
-    divide() {
-      this.operator = (a, b) => b / a;
-      this.setPrevious();
-    },
-    times() {
-      this.operator = (a, b) => a * b;
-      this.setPrevious();
-    },
-    minus() {
-      this.operator = (a, b) => a - b;
-      this.setPrevious();
-    },
-    add() {
-      this.operator = (a, b) => a + b;
-      this.setPrevious();
     },
     equal() {
+      this.current = eval(this.current);
+      this.previous = null;
+    },
+    pequal() {
       this.current = `${this.operator(
         parseFloat(this.current), 
         parseFloat(this.previous)
       )}`;
-      this.previous = null;
     },
-    pi() {
-      this.append(Math.PI);
-      
+    piyo() {
+      this.operator = (a) => Math.PI * a;
+      this.setPrevious();
+      this.equal();
     },
     rad(){
       this.operator = (a) => a * 180 / Math.PI;
       this.setPrevious();
-      this.equal();
-    },
-    root(){
-      this.operator = (a) => Math.sqrt(a);
-      this.setPrevious();
-      this.equal();
-    },
-    sin() {
-      this.operator = (a) => Math.sin(a * Math.PI / 180);
-      this.setPrevious();
-      this.equal();
-    },
-    cos() {
-      this.operator = (a) => Math.cos(a * Math.PI / 180);
-      this.setPrevious();
-      this.equal();
-    },
-    tan() {
-      this.operator = (a) => Math.tan(a * Math.PI / 180);
-      this.setPrevious();
-      this.equal();
-    },
-    ln() {
-      this.operator = (a) => Math.log(a);
-      this.setPrevious();
-      this.equal();
-    },
-    log() {
-      this.operator = (a) => Math.log10(a);
-      this.setPrevious();
-      this.equal();
+      this.pequal();
     },
     xdivide() {
       this.operator = (a) => 1/a;
       this.setPrevious();
-      this.equal();
-    },
-    expow() {
-      this.operator = (a) => Math.exp(a);
-      this.setPrevious();
-      this.equal();
+      this.pequal();
     },
     xtpow(){
       this.operator = (a) => Math.pow(a, 2);
       this.setPrevious();
-      this.equal();
+      this.pequal();
     },
     xypow() {
       this.operator = (a,b) => Math.pow(b, a);
@@ -160,12 +123,12 @@ export default {
     abs() {
       this.operator = (a) => Math.abs(a);
       this.setPrevious();
-      this.equal();
+      this.pequal();
     },
     juste() {
       this.operator = (a) => a * Math.E;
       this.setPrevious();
-      this.equal();
+      this.pequal();
     }
   }
 }
@@ -180,6 +143,11 @@ export default {
 .display {
   grid-column: 1 / 8;
   background-color: #333;
+  color: white;
+}
+.sdisplay {
+  grid-column: 1 / 8;
+  background-color: rgb(32, 201, 142);
   color: white;
 }
 .btn {
