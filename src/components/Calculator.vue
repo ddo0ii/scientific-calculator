@@ -104,7 +104,7 @@ export default {
       
     },
     rad(){
-      this.operator = (a) => a * Math.PI() / 180;
+      this.operator = (a) => a * 180 / Math.PI();
       this.setPrevious();
       this.equal();
     },
