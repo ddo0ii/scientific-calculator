@@ -114,17 +114,17 @@ export default {
       this.equal();
     },
     sin() {
-      this.operator = (a) => Math.sin(a) * 180 / Math.PI;
+      this.operator = (a) => Math.sin(a * Math.PI / 180);
       this.setPrevious();
       this.equal();
     },
     cos() {
-      this.operator = (a) => Math.cos(a);
+      this.operator = (a) => Math.cos(a * Math.PI / 180);
       this.setPrevious();
       this.equal();
     },
     tan() {
-      this.operator = (a) => Math.tan(a);
+      this.operator = (a) => Math.tan(a * Math.PI / 180);
       this.setPrevious();
       this.equal();
     },
