@@ -57,9 +57,6 @@ export default {
       this.current = this.current.charAt(0) === '-' ? 
         this.current.slice(1) : `-${this.current}`;
     },
-    percent() {
-      this.current = `${parseFloat(this.current) / 100}`;
-    },
     append(number) {
       if (this.operatorClicked) {
         this.current = '';
@@ -76,8 +73,11 @@ export default {
       this.previous = this.current;
       this.operatorClicked = true;
     },
+    percent() {
+      this.current = `${parseFloat(this.current) / 100}`;
+    },    
     divide() {
-      this.operator = (a, b) => a / b;
+      this.operator = (a, b) => b / a;
       this.setPrevious();
     },
     times() {
@@ -104,7 +104,7 @@ export default {
       
     },
     rad(){
-      this.operator = (a) => a * 180 / Math.PI();
+      this.operator = (a) => a * 180 / Math.PI;
       this.setPrevious();
       this.equal();
     },
@@ -166,7 +166,7 @@ export default {
       this.operator = (a) => a * Math.E;
       this.setPrevious();
       this.equal();
-    },
+    }
   }
 }
 </script>
