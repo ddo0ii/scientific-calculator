@@ -45,7 +45,6 @@ export default {
     return {
       previous: null,
       current: '',
-      scurrent: '',
       operator: null,
       operatorClicked: false,
     }
@@ -53,27 +52,17 @@ export default {
   methods: {
     clear() {
       this.current = '';
-      this.scurrent ='';
     },
     sign() {
       this.current = this.current.charAt(0) === '-' ? 
-        this.current.slice(1) : `-${this.current}`;
-        
-      this.scurrent = this.scurrent.charAt(0) === '-' ? 
-        this.scurrent.slice(1) : `-${this.scurrent}`;
+        this.current.slice(1) : `-${this.current}`;      
     },
     append(number) {
       if (this.operatorClicked) {
         this.current = '';
         this.operatorClicked = false;
       }
-      this.current = `${this.current}${number}`;
-      
-      if (this.operatorClicked) {
-        this.scurrent = '';
-        this.operatorClicked = false;
-      }
-      this.scurrent = `${this.scurrent}${number}`;
+      this.current = `${this.current}${number}`;    
     },
     dot() {
       if (this.current.indexOf('.') === -1) {
@@ -143,11 +132,6 @@ export default {
 .display {
   grid-column: 1 / 8;
   background-color: #333;
-  color: white;
-}
-.sdisplay {
-  grid-column: 1 / 8;
-  background-color: rgb(32, 201, 142);
   color: white;
 }
 .btn {
